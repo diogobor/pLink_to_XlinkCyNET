@@ -466,6 +466,10 @@ namespace pLink_to_XlinkCyNET
                         gene_a = xlList[0].Protein1;
                     if (String.IsNullOrEmpty(gene_b))
                         gene_b = xlList[0].Protein2;
+
+                    gene_a = Regex.Replace(gene_a, "-", "_");
+                    gene_b = Regex.Replace(gene_b, "-", "_");
+
                     sb_xls.Append(gene_a + "-" + xlList[0].PepPos1 + "-" + gene_b + "-" + xlList[0].PepPos2 + "#");
                     sb_score.Append(xlList[0].Score + "#");
                     scores.Add(xlList[0].Score);

@@ -37,8 +37,10 @@ namespace pLink_to_XlinkCyNET.Uniprot
                 if (node.Attributes != null && node.Attributes.Count > 2)
                 {
                     if (node.Attributes[2].Name.Equals("checksum"))
+                    {
                         ProteinSequence = node.InnerText;
-                    break;
+                        break;
+                    }
                 }
             }
 
@@ -57,7 +59,15 @@ namespace pLink_to_XlinkCyNET.Uniprot
             {
                 if (node.Name.Equals("gene"))
                 {
-                    Gene = node.InnerText;
+                    if (node.HasChildNodes && node.ChildNodes.Count > 1)
+                    {
+                        StringBuilder sb_genes = new();
+                        foreach (XmlNode gene_node in node.ChildNodes)
+                            sb_genes.Append(gene_node.InnerText + "_");
+                        Gene = sb_genes.ToString().Substring(0, sb_genes.ToString().Length - 1);
+                    }
+                    else
+                        Gene = node.InnerText;
                     break;
                 }
             }
